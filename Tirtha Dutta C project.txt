@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_BOOKS 100
+#define MAX_BORROWERS 100
+
+struct Book {
+    int id;
+    char title[50];
+    char author[50];
+    int is_available;
+};
+
+struct Borrower {
+    int id;
+    char name[50];
+    char phone[20];
+    int num_books_borrowed;
+    int book_ids[5];
+};
+
+struct Library {
+    struct Book books[MAX_BOOKS];
+    struct Borrower borrowers[MAX_BORROWERS];
+    int num_books;
+    int num_borrowers;
+};
+
+void print_book(struct Book book) {
+    printf("%d - %s by %s (%s)\n", book.id, book.title, book.author, book.is_available ? "Available" : "Not Available");
+}
+
+void print_borrower(struct Borrower borrower) {
+    printf("%d - %s (%s) has borrowed %d books\n", borrower.id, borrower.name, borrower.phone, borrower.num_books_borrowed);
+    printf("Book IDs: ");
+    for (int i = 0; i < borrower.num_books_borrowed; i++) {
+        printf("%d ", borrower.book_ids[i]);
+    }
+    printf("\n");
+}
+
+void print_library(struct Library library) {
+    printf("---- Books ----\n");
+    for (int i = 0; i < library.num_books; i++) {
+        print_book(library.books[i]);
+    }
+    printf("---- Borrowers ----\n");
+    for (int i = 0; i < library.num_borrowers; i++) {
+        print_borrower(library.borrowers[i]);
+    }
+}
+
+void add_book(struct Library *library, char *title, char *author) {
+    if (library->num_books < MAX_BOOKS) {
+        struct Book book;
+        book.id = library->num_books + 1;
+        strcpy(book.title, title);
+        strcpy(book.author, author);
+        book.is_available = 1;
+        library->books[library->num_books] = book;
+        library->num_books++;
+        printf("Book added successfully!\n");
+    } else {
+        printf("Error: Maximum number of books reached\n");
+    }
+}
+
+void add_borrower(struct Library *library, char *name, char *phone) {
+    if (library->num_borrowers < MAX_BORROWERS) {
+        struct Borrower borrower;
+        borrower.id = library->num_borrowers + 1;
+        strcpy(borrower.name, name);
+        strcpy(borrower.phone, phone);
+        borrower.num_books_borrowed = 0;
+        library->borrowers[library->num_borrowers] = borrower;
+        library->num_borrowers++;
+        printf("Borrower added successfully!\n");
+    } else {
+        printf("Error: Maximum number of borrowers reached\n");
+    }
+}
+
+void borrow_book(struct Library *library, int book_id, int borrower_id) {
+    struct Book *book = NULL;
+    for (int i = 0; i < library->num_books; i++) {
+        if (library->books[i].id == book_id) {
+            book = &library->books[i];
+            break;
+        }
+    }
+    if (book != NULL && book->is_available) {
+        struct Borrower *borrower = NULL;
+        for (int i = 0; i < library->num_borrowers; i++) {
+            if (library->borrowers[i].id == borrower_id) {
+                borrower =
+
+
+
+
+Regenerate response
